@@ -1,0 +1,120 @@
+[gd_scene load_steps=11 format=3 uid="uid://dpmd22ac7y5cr"]
+
+[ext_resource type="PhysicsMaterial" uid="uid://cw6v2gxbibnwq" path="res://brickphysics.tres" id="1_bdwag"]
+[ext_resource type="Script" uid="uid://do2yq2a4bghg3" path="res://cannonball.gd" id="1_jmdrc"]
+[ext_resource type="Texture2D" uid="uid://cfh7fyf822qo1" path="res://ball.png" id="2_246s8"]
+[ext_resource type="Texture2D" uid="uid://bpc2o7v0nriml" path="res://skrompt.png" id="4_dfjte"]
+[ext_resource type="AudioStream" uid="uid://bktfwd6pohv1f" path="res://pulsing.mp3" id="4_dix7p"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bdwag"]
+radius = 17.1172
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_246s8"]
+radius = 16.0
+
+[sub_resource type="Animation" id="Animation_bdwag"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:fully_dead")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_246s8"]
+resource_name = "die"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:fully_dead")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.9),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_dix7p"]
+_data = {
+&"RESET": SubResource("Animation_bdwag"),
+&"die": SubResource("Animation_246s8")
+}
+
+[node name="Cannonball" type="RigidBody2D"]
+mass = 60.0
+physics_material_override = ExtResource("1_bdwag")
+can_sleep = false
+contact_monitor = true
+max_contacts_reported = 1
+script = ExtResource("1_jmdrc")
+
+[node name="Hurtbox" type="Area2D" parent="."]
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+shape = SubResource("CircleShape2D_bdwag")
+debug_color = Color(1, 0, 0, 0.419608)
+
+[node name="Ball" type="Sprite2D" parent="."]
+scale = Vector2(4, 4)
+texture = ExtResource("2_246s8")
+
+[node name="Skrompt" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(-1.90735e-06, -1.90735e-06)
+scale = Vector2(0.0444444, 0.0444444)
+texture = ExtResource("4_dfjte")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_246s8")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_dix7p")
+}
+speed_scale = 5.0
+movie_quit_on_finish = true
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+scale = Vector2(4, 4)
+target_position = Vector2(-20, 0)
+collision_mask = 8
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_dix7p")
+volume_db = -8.64
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_entered" from="Hurtbox" to="." method="_on_hurtbox_body_entered"]

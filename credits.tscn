@@ -1,0 +1,64 @@
+[gd_scene load_steps=6 format=3 uid="uid://8wt082w6kctw"]
+
+[ext_resource type="FontFile" uid="uid://r1r0ixu4neeu" path="res://Tiny5.ttf" id="1_nm7lk"]
+[ext_resource type="Script" uid="uid://gv1lhut6yp06" path="res://credits.gd" id="1_pjc1l"]
+[ext_resource type="Texture2D" uid="uid://qs4ahgu4idcp" path="res://background.png" id="2_c1t8d"]
+[ext_resource type="Theme" uid="uid://my1oxfrp8cyo" path="res://base_theme.tres" id="3_g4wvt"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_c1t8d"]
+font = ExtResource("1_nm7lk")
+font_size = 32
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_pjc1l")
+
+[node name="Background" type="TextureRect" parent="."]
+z_index = -4096
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_c1t8d")
+stretch_mode = 6
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Credits
+
+Cannon sound effect: \"Cannon fired\" by Gamemaster Audio on Uppbeat
+Split sound effect: \"Bubbling digital pulse (Short)\" by Gamemaster Audio on
+Uppbeat
+Explosion sound effect: \"Bomb explosion - large & short\" by Gamemaster Audio on
+Uppbeat
+Music: \"Glory Days\" from \"Night at the Wax Museum\"
+All information gathered from Reddit, the Godot Documentation, the
+Godot Forums, and my previous experience
+All other assets by me :)"
+label_settings = SubResource("LabelSettings_c1t8d")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BackButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 24.0
+offset_right = 104.0
+offset_bottom = 88.0
+scale = Vector2(2, 2)
+theme = ExtResource("3_g4wvt")
+text = "Back"
+
+[connection signal="pressed" from="BackButton" to="." method="_on_back_button_pressed"]

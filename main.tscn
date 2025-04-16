@@ -1,0 +1,236 @@
+[gd_scene load_steps=18 format=4 uid="uid://cr2p45nv7og82"]
+
+[ext_resource type="Script" uid="uid://c0dneeltthvw5" path="res://main.gd" id="1_kek77"]
+[ext_resource type="Texture2D" uid="uid://qs4ahgu4idcp" path="res://background.png" id="1_lquwl"]
+[ext_resource type="PackedScene" uid="uid://0kgypwovs337" path="res://cannon.tscn" id="2_0xm2m"]
+[ext_resource type="Script" uid="uid://dirarbp6cudc8" path="res://map_bounds.gd" id="2_272bh"]
+[ext_resource type="TileSet" uid="uid://40ysgeb2cf14" path="res://maintiles.tres" id="2_h2yge"]
+[ext_resource type="Script" uid="uid://bo7mlgmv1xeid" path="res://spawntiles.gd" id="3_1bvp3"]
+[ext_resource type="TileSet" uid="uid://b66ptwwh1cc3i" path="res://breakable_tiles.tres" id="3_h2yge"]
+[ext_resource type="Texture2D" uid="uid://7i3sly6iusuo" path="res://waves.png" id="6_7mycd"]
+[ext_resource type="AudioStream" uid="uid://cq2byr8cw0pkj" path="res://glorydaysedited.mp3" id="8_5vw27"]
+[ext_resource type="Theme" uid="uid://my1oxfrp8cyo" path="res://base_theme.tres" id="10_4c57u"]
+[ext_resource type="Texture2D" uid="uid://bpc2o7v0nriml" path="res://skrompt.png" id="11_efxa6"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1bvp3"]
+size = Vector2(1024, 768)
+
+[sub_resource type="Animation" id="Animation_272bh"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-424, 152)]
+}
+
+[sub_resource type="Animation" id="Animation_7mycd"]
+resource_name = "waves"
+length = 3.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 0
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6, 1.8, 2, 2.2, 2.4, 2.6, 2.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-424, 152), Vector2(-428, 152), Vector2(-432, 152), Vector2(-436, 152), Vector2(-440, 156), Vector2(-444, 156), Vector2(-448, 156), Vector2(-452, 156), Vector2(-456, 152), Vector2(-464, 152), Vector2(-468, 152), Vector2(-472, 148), Vector2(-476, 148), Vector2(-480, 148), Vector2(-484, 148)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_5vw27"]
+_data = {
+&"RESET": SubResource("Animation_272bh"),
+&"waves": SubResource("Animation_7mycd")
+}
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_272bh"]
+normal = Vector2(-1, 0)
+distance = -386.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_4c57u"]
+font_size = 72
+
+[node name="Node2D" type="Node2D"]
+process_mode = 3
+script = ExtResource("1_kek77")
+
+[node name="Background" type="Sprite2D" parent="."]
+z_index = -4096
+position = Vector2(-16, 40)
+scale = Vector2(4, 4)
+texture = ExtResource("1_lquwl")
+
+[node name="MapBounds" type="Area2D" parent="."]
+script = ExtResource("2_272bh")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MapBounds"]
+position = Vector2(0, -8)
+shape = SubResource("RectangleShape2D_1bvp3")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(1.5, 1.5)
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+scale = Vector2(4, 4)
+tile_map_data = PackedByteArray("AAD9/wQAAAAAAAAAAAD8/wQAAAAAAAAAAAA=")
+tile_set = ExtResource("2_h2yge")
+
+[node name="BreakableTileMap" type="TileMapLayer" parent="."]
+process_mode = 1
+scale = Vector2(4, 4)
+tile_map_data = PackedByteArray("AAD8/wMAAAABAAIAAAD9/wMAAAABAAIAAAD9/wIAAAAAAAAAAAD8/wIAAAAAAAAAAAD8/wEAAAABAAAAAAD9/wEAAAABAAAAAAD9/wAAAAAAAAEAAAD8/wAAAAAAAAEAAAD9////AAABAAEAAAD8////AAABAAEAAAD9//7/AAAAAAIAAAD8//7/AAAAAAIAAAD9//3/AAAAAAAAAAD8//3/AAAAAAAAAAA=")
+tile_set = ExtResource("3_h2yge")
+script = ExtResource("3_1bvp3")
+
+[node name="Cannonballs" type="Node2D" parent="."]
+process_mode = 1
+
+[node name="Blocks" type="Node2D" parent="."]
+process_mode = 1
+
+[node name="Cannon" parent="." instance=ExtResource("2_0xm2m")]
+position = Vector2(144, 112)
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="Control"]
+layout_mode = 0
+offset_left = -424.0
+offset_top = 152.0
+offset_right = -157.0
+offset_bottom = 184.0
+scale = Vector2(4, 4)
+texture = ExtResource("6_7mycd")
+stretch_mode = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Control/TextureRect"]
+libraries = {
+&"": SubResource("AnimationLibrary_5vw27")
+}
+autoplay = "waves"
+
+[node name="AnimatableBody2D" type="AnimatableBody2D" parent="."]
+collision_layer = 15
+collision_mask = 15
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatableBody2D"]
+shape = SubResource("WorldBoundaryShape2D_272bh")
+debug_color = Color(0.984314, 0, 0.345098, 0.545098)
+
+[node name="Explosions" type="Node2D" parent="."]
+process_mode = 1
+
+[node name="Music" type="AudioStreamPlayer2D" parent="."]
+process_mode = 1
+stream = ExtResource("8_5vw27")
+volume_db = -6.638
+autoplay = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+process_mode = 2
+visible = false
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PauseMenu" type="ColorRect" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -512.0
+offset_top = -260.0
+offset_right = 512.0
+offset_bottom = 260.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.247059)
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/PauseMenu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -144.0
+offset_top = -148.0
+offset_right = 144.0
+offset_bottom = -67.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("10_4c57u")
+text = "PAUSED!"
+label_settings = SubResource("LabelSettings_4c57u")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ResumeButton" type="Button" parent="CanvasLayer/Control/PauseMenu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -112.0
+offset_top = -44.0
+offset_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(2, 2)
+theme = ExtResource("10_4c57u")
+text = "Resume"
+
+[node name="QuitButton" type="Button" parent="CanvasLayer/Control/PauseMenu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -112.0
+offset_top = 60.0
+offset_bottom = 105.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(2, 2)
+theme = ExtResource("10_4c57u")
+text = "Quit"
+
+[node name="SkromptButton" type="TextureButton" parent="CanvasLayer/Control/PauseMenu"]
+layout_mode = 0
+offset_left = 960.0
+offset_top = 456.0
+offset_right = 1024.0
+offset_bottom = 520.0
+texture_normal = ExtResource("11_efxa6")
+ignore_texture_size = true
+stretch_mode = 4
+
+[connection signal="body_exited" from="MapBounds" to="MapBounds" method="_on_body_exited"]
+[connection signal="pressed" from="CanvasLayer/Control/PauseMenu/ResumeButton" to="." method="_on_resume_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/PauseMenu/QuitButton" to="." method="_on_quit_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/PauseMenu/SkromptButton" to="." method="_on_skrompt_button_pressed"]

@@ -1,0 +1,81 @@
+[gd_scene load_steps=6 format=3 uid="uid://jpjottu6tvek"]
+
+[ext_resource type="Texture2D" uid="uid://qs4ahgu4idcp" path="res://background.png" id="1_7vrkn"]
+[ext_resource type="Texture2D" uid="uid://yeqbvpdgmofo" path="res://cannonchaoslogo.png" id="2_fu7sn"]
+[ext_resource type="Theme" uid="uid://my1oxfrp8cyo" path="res://base_theme.tres" id="3_fu7sn"]
+[ext_resource type="Script" uid="uid://dpkueyg367ged" path="res://play_button.gd" id="4_jix8l"]
+[ext_resource type="Script" uid="uid://rfkwiurhoywo" path="res://credits_button.gd" id="5_glbon"]
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="TextureRect" parent="."]
+z_index = -4096
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_7vrkn")
+stretch_mode = 6
+
+[node name="Logo" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -280.0
+offset_top = -324.0
+offset_right = 280.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_fu7sn")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="PlayButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -128.0
+offset_top = -4.0
+offset_right = -43.0
+offset_bottom = 39.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(3, 3)
+theme = ExtResource("3_fu7sn")
+text = "Play"
+script = ExtResource("4_jix8l")
+
+[node name="CreditsButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -96.0
+offset_top = 156.0
+offset_bottom = 204.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(2, 2)
+theme = ExtResource("3_fu7sn")
+text = "Credits"
+script = ExtResource("5_glbon")
+
+[connection signal="pressed" from="PlayButton" to="PlayButton" method="_on_pressed"]
+[connection signal="pressed" from="CreditsButton" to="CreditsButton" method="_on_pressed"]

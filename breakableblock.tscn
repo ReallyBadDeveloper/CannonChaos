@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://nos8x0p00spe"]
+
+[ext_resource type="Script" uid="uid://j11lfuyxo4i0" path="res://breakableblock.gd" id="1_2gejr"]
+[ext_resource type="Texture2D" uid="uid://cndu5a34l8ywd" path="res://breakabletiles.png" id="1_3cwmx"]
+[ext_resource type="PhysicsMaterial" uid="uid://cw6v2gxbibnwq" path="res://brickphysics.tres" id="1_sqnts"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3cwmx"]
+size = Vector2(64, 64)
+
+[node name="BreakableBlock" type="RigidBody2D"]
+process_mode = 1
+collision_layer = 11
+collision_mask = 9
+mass = 20.0
+physics_material_override = ExtResource("1_sqnts")
+can_sleep = false
+lock_rotation = true
+contact_monitor = true
+max_contacts_reported = 1
+script = ExtResource("1_2gejr")
+
+[node name="Breakabletiles" type="Sprite2D" parent="."]
+scale = Vector2(4, 4)
+texture = ExtResource("1_3cwmx")
+hframes = 2
+vframes = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_3cwmx")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

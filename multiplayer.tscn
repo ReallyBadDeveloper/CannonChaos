@@ -1,0 +1,38 @@
+[gd_scene load_steps=7 format=4 uid="uid://djkd3pfxp8r85"]
+
+[ext_resource type="Script" uid="uid://dswqjru6kachd" path="res://multiplayer.gd" id="1_r1ube"]
+[ext_resource type="TileSet" uid="uid://40ysgeb2cf14" path="res://maintiles.tres" id="1_wuni8"]
+[ext_resource type="TileSet" uid="uid://b66ptwwh1cc3i" path="res://breakable_tiles.tres" id="2_r1ube"]
+[ext_resource type="Script" uid="uid://bo7mlgmv1xeid" path="res://spawntiles.gd" id="3_ox3ly"]
+[ext_resource type="PackedScene" uid="uid://0kgypwovs337" path="res://cannon.tscn" id="4_sqe1x"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1bvp3"]
+size = Vector2(1024, 768)
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_r1ube")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(-5.72205e-06, 0)
+shape = SubResource("RectangleShape2D_1bvp3")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(0.5, 0.5)
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+scale = Vector2(4, 4)
+tile_map_data = PackedByteArray("AAD9/wQAAAAAAAAAAAD+/wQAAAAAAAAAAAD//wQAAAAAAAAAAAD8/wQAAAAAAAAAAAA=")
+tile_set = ExtResource("1_wuni8")
+
+[node name="BreakableTileMap" type="TileMapLayer" parent="."]
+scale = Vector2(4, 4)
+tile_map_data = PackedByteArray("AAD9//3/AAABAAAAAAD9//7/AAAAAAAAAAD9////AAABAAAAAAD9/wAAAAAAAAAAAAD9/wEAAAABAAAAAAD9/wIAAAAAAAAAAAD9/wMAAAABAAAAAAD+//3/AAAAAAAAAAD+//7/AAAAAAEAAAD+////AAAAAAAAAAD+/wAAAAAAAAEAAAD+/wEAAAAAAAAAAAD+/wIAAAAAAAEAAAD+/wMAAAAAAAAAAAD8/wMAAAABAAAAAAD8/wIAAAABAAAAAAD8/wEAAAABAAAAAAD8/wAAAAABAAAAAAD8////AAABAAAAAAD8//7/AAABAAAAAAD8//3/AAABAAAAAAD//wMAAAAAAAEAAAD//wIAAAAAAAEAAAD//wEAAAAAAAEAAAD//wAAAAAAAAEAAAD/////AAAAAAEAAAD///7/AAAAAAEAAAD///3/AAAAAAEAAAA=")
+tile_set = ExtResource("2_r1ube")
+script = ExtResource("3_ox3ly")
+
+[node name="Cannonballs" type="Node2D" parent="."]
+
+[node name="Cannon" parent="." instance=ExtResource("4_sqe1x")]
+position = Vector2(112, 120)

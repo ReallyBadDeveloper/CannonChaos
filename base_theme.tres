@@ -1,0 +1,7 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://my1oxfrp8cyo"]
+
+[ext_resource type="FontFile" uid="uid://r1r0ixu4neeu" path="res://Tiny5.ttf" id="1_6qegq"]
+
+[resource]
+default_font = ExtResource("1_6qegq")
+Label/fonts/font = ExtResource("1_6qegq")
