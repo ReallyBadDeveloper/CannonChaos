@@ -13,6 +13,7 @@ config_version=5
 config/name="Cannon Chaos"
 run/main_scene="uid://jpjottu6tvek"
 config/features=PackedStringArray("4.4", "GL Compatibility")
+boot_splash/image="uid://yeqbvpdgmofo"
 config/icon="uid://d0v8lec63vkpo"
 
 [display]
